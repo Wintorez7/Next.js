@@ -1,9 +1,11 @@
 import React from 'react'
+import { Skeleton } from "@/components/ui/skeleton"
+
 
 const Loading = () => {
   return (
-    <div>
-      Loading Please Wait
+    <div className='w-full min-h-screen'>
+      <Skeleton/>
     </div>
   )
 }

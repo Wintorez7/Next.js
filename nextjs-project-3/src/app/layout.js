@@ -1,17 +1,11 @@
 // import { Geist, Geist_Mono } from "next/font/google";  
 import "./globals.css";
 import { Suspense } from "react";
+import {Inter} from "next/font/google"
+import Loading from "./loading";
 
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const inter = Inter({subset:['latin']})
 
 export const metadata = {
   title: "Create Next App",
@@ -21,8 +15,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="antialiased">
-      <Suspense>
+      <body className={inter.className}>
+      <Suspense fallback={<Loading/>}>
         {children}
       </Suspense>
       </body>
