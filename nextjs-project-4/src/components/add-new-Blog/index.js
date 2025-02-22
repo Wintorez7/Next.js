@@ -15,8 +15,9 @@ const AddNewBlog = ({
   setOpenBlogDialog,
   loading,
   setLoading,
-  blogFormData,
   setBlogFormData,
+  blogFormData,
+  handleSaveBlogData
 }) => {
   return (
     <div>
@@ -33,17 +34,37 @@ const AddNewBlog = ({
               <Label htmlFor="name" className="text-right">
                 Title
               </Label>
-              <Input id="title" className="col-span-3" />
+              <Input
+                id="title"
+                name="title"
+                placeholder="Enter Blog title"
+                value={blogFormData.title}
+                onChange={(event) =>
+                  setBlogFormData({ ...blogFormData, title: event.target.value })
+                }
+                className="col-span-3"
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
                 Description
               </Label>
-              <Input id="description" className="col-span-3" />
+              <Input
+                id="description"
+                name="description"
+                value={blogFormData.description}
+                onChange={(event) => {
+                  setBlogFormData({
+                    ...blogFormData,
+                    description: event.target.value,
+                  });
+                }}
+                className="col-span-3"
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button type="button">Save changes</Button>
+            <Button onClick={handleSaveBlogData} type="button">Save changes</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

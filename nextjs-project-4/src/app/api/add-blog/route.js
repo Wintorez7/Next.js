@@ -9,16 +9,21 @@ const AddNewBLog = Joi.object({
     description : Joi.string().required(),
 })
 
+// console.log("post req " + req)
 
 export async function POST(req) {
     try {
+        const extractBlogData = await req.json();
+        console.log("post req " + extractBlogData)
+        
         await connectToDB();
 
-        const extractBlogData = await req.json();
+
         const {title , description} = extractBlogData;
         const {error} = AddNewBLog.validate({
             title,description
         })
+        console.log(extractBlogData)
 
         if(error){
             return NextResponse.json({
@@ -30,7 +35,7 @@ export async function POST(req) {
         const newlyCreatedBlogItem = await Blog.create(extractBlogData);
         if(newlyCreatedBlogItem){
             return NextResponse.json({
-                succes: true,
+                success: true,
                 message: "Blog Added Successfully"
             })
         }else{
