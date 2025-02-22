@@ -9,7 +9,6 @@ const AddNewBLog = Joi.object({
     description : Joi.string().required(),
 })
 
-// console.log("post req " + req)
 
 export async function POST(req) {
     try {
@@ -17,7 +16,6 @@ export async function POST(req) {
         console.log("post req " + extractBlogData)
         
         await connectToDB();
-
 
         const {title , description} = extractBlogData;
         const {error} = AddNewBLog.validate({

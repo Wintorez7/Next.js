@@ -14,27 +14,35 @@ const AddNewBlog = ({
   openBlogDialog,
   setOpenBlogDialog,
   loading,
+  setLoading,
   setBlogFormData,
   blogFormData,
   handleSaveBlogData,
 }) => {
-  
-  const resetForm = () => {
-    setBlogFormData({ title: "", description: "" });
-    setOpenBlogDialog(false);
-  };
-
   return (
     <div>
-      <Button onClick={() => setOpenBlogDialog(true)}>Add New Blog</Button>
-      <Dialog open={openBlogDialog} onOpenChange={resetForm}>
+      <div>
+        <Button onClick={() => setOpenBlogDialog(true)}>Add New Blog</Button>
+      </div>
+      <Dialog
+        open={openBlogDialog}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setOpenBlogDialog(false);
+            setBlogFormData({
+              title: "",
+              description: "",
+            });
+          }
+        }}
+      >
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add New Blog</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="title" className="text-right">
+              <Label htmlFor="name" className="text-right">
                 Title
               </Label>
               <Input
@@ -42,31 +50,36 @@ const AddNewBlog = ({
                 name="title"
                 placeholder="Enter Blog title"
                 value={blogFormData.title}
-                onChange={(e) =>
-                  setBlogFormData({ ...blogFormData, title: e.target.value })
+                onChange={(event) =>
+                  setBlogFormData({
+                    ...blogFormData,
+                    title: event.target.value,
+                  })
                 }
                 className="col-span-3"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
+              <Label htmlFor="username" className="text-right">
                 Description
               </Label>
               <Input
                 id="description"
                 name="description"
-                placeholder="Enter Blog description"
                 value={blogFormData.description}
-                onChange={(e) =>
-                  setBlogFormData({ ...blogFormData, description: e.target.value })
-                }
+                onChange={(event) => {
+                  setBlogFormData({
+                    ...blogFormData,
+                    description: event.target.value,
+                  });
+                }}
                 className="col-span-3"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleSaveBlogData} type="button" disabled={loading}>
-              {loading ? "Saving..." : "Save Changes"}
+            <Button onClick={handleSaveBlogData} type="button">
+              {loading ? "Saving changes" : "Save changes"}
             </Button>
           </DialogFooter>
         </DialogContent>
