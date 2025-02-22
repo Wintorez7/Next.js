@@ -14,11 +14,12 @@ const AddNewBlog = ({
   openBlogDialog,
   setOpenBlogDialog,
   loading,
-  setLoading,
   setBlogFormData,
   blogFormData,
   handleSaveBlogData,
 }) => {
+  
+
   return (
     <div>
       <div>
@@ -26,16 +27,14 @@ const AddNewBlog = ({
       </div>
       <Dialog
         open={openBlogDialog}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            setOpenBlogDialog(false);
-            setBlogFormData({
-              title: "",
-              description: "",
-            });
-          }
+        onOpenChange={() => {
+          setOpenBlogDialog(false)
+          setBlogFormData({
+            title: "",
+            description: "",
+          })
         }}
-      >
+        >
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add New Blog</DialogTitle>
