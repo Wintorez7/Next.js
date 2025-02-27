@@ -24,7 +24,7 @@ export const BlogOverView = () => {
       })
       const result = await apiResponse.json();
       if(result?.success){
-        setBlogFormData(initialFormData);
+        setBlogFormData(initialFormData); 
         setOpenBlogDialog(false);
         setLoading(false)
       }
