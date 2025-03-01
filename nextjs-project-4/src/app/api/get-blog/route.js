@@ -1,4 +1,5 @@
 import connectToDB from "@/database";
+import Blog from "@/models/blog";
 import { NextResponse } from "next/server";
 
 

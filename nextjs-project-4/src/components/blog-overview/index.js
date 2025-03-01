@@ -1,17 +1,32 @@
 "use client";
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
 import AddNewBlog from "../add-new-Blog";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 const initialFormData = {
   title: "",
   description: "",
 };
 
-export const BlogOverView = () => {
+export const BlogOverView = ({blogList}) => {
   const [openBlogDialog, setOpenBlogDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [blogFormData, setBlogFormData] = useState(initialFormData);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  },[])
 
   console.log(blogFormData);
 
@@ -27,6 +42,7 @@ export const BlogOverView = () => {
         setBlogFormData(initialFormData); 
         setOpenBlogDialog(false);
         setLoading(false)
+        router.refresh()
       }
       console.log(result)
     } catch (error) {
@@ -36,6 +52,7 @@ export const BlogOverView = () => {
     }
   }
   
+
 
   return (
     <div className="min-h-screen flex flex-col gap-10 bg-gradient-to-r from-purple-500 to-blue-600 p-6">
@@ -48,8 +65,23 @@ export const BlogOverView = () => {
         setBlogFormData={setBlogFormData}
         handleSaveBlogData={handleSaveBlogData}
       />
-      <div>
-        <Button>Blog List Section</Button>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
+        {
+          blogList && blogList.length > 0 ?
+          blogList.map((blogItem,index) => 
+          <Card key={blogItem.id || index} className="p-5 flex">
+              <CardContent>
+                <CardTitle className="mb-5 text-3xl">{blogItem?.title}</CardTitle>
+                <CardDescription className="text-lg">{blogItem?.description}</CardDescription>
+                <div className="mt-5 flex gap-5 justify-center items-center">
+                  <Button>Edit</Button>
+                  <Button>Delete</Button>
+                </div>
+              </CardContent>
+            </Card>
+          )
+          : null
+        }
       </div>
     </div>
   );

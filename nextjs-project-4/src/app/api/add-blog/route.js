@@ -13,7 +13,7 @@ const AddNewBLog = Joi.object({
 export async function POST(req) {
     try {
         const extractBlogData = await req.json();
-        console.log("post req " + extractBlogData)
+        console.log(extractBlogData)
         
         await connectToDB();
 

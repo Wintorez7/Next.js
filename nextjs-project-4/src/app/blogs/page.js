@@ -8,20 +8,22 @@ async function fetchListOfBlogs() {
     });
 
     const result = await apiResponse.json()
+    console.log('Fetched Blog Data',result)
     return result?.data;
     
   } catch (error) {
-    throw new Error(error)
+    console.error("Error fetching blogs:", error);
+    return [];
   }
 }
 
   async function Blogs() {
     
     const blogList = await fetchListOfBlogs()
-    console.log(blogList)
+    console.log(blogList,'blogList')
 
   return (
-    <BlogOverView/>
+    <BlogOverView blogList={blogList}/>
   )
 }
 
