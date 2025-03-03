@@ -17,6 +17,8 @@ const AddNewBlog = ({
   setBlogFormData,
   blogFormData,
   handleSaveBlogData,
+  currentEditedBlogID,
+  setCurrentEditedBlogID
 }) => {
   
 
@@ -29,15 +31,15 @@ const AddNewBlog = ({
         open={openBlogDialog}
         onOpenChange={() => {
           setOpenBlogDialog(false)
-          setBlogFormData({
-            title: "",
-            description: "",
-          })
+          if (!currentEditedBlogID) {
+            setBlogFormData({ title: "", description: "" });
+          }
+          setCurrentEditedBlogID(null)
         }}
         >
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add New Blog</DialogTitle>
+            <DialogTitle>{currentEditedBlogID ? 'Edit':'Add New Blog'}{" "}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
