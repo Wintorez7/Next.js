@@ -11,11 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { addNewUserFormControls } from "@/utils";
+import { addNewUserFormControls, addNewUserFormInitialState } from "@/utils";
 import { useState } from "react";
 
 function AddNewUser() {
   const [openPopup, setOpenPopup] = useState(false);
+  const [addNewUserFormData , setaddNewUserFormData] = useState(addNewUserFormInitialState)
 
   return (
     <div>
@@ -40,6 +41,8 @@ function AddNewUser() {
                     name={controlItem.name}
                     placeholder={controlItem.placeholder}
                     className="col-span-3 mt-2"
+                    type={controlItem.type}
+                    value={addNewUserFormData[controlItem.name]}
                   />
                 </div>
               ))}
