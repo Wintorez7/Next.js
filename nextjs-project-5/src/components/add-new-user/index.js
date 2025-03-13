@@ -22,7 +22,7 @@ function AddNewUser() {
 
   console.log(addNewUserFormData);
 
-  function handleSaveButtonVaild() {
+  function handleSaveButtonValid() {
     return Object.keys(addNewUserFormData).every(
       key => addNewUserFormData[key].trim() !== ""
     );
@@ -43,8 +43,7 @@ function AddNewUser() {
         onOpenChange={() => {
           setOpenPopup(false);
           setaddNewUserFormData(addNewUserFormInitialState);
-        }}
-      >
+        }}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add New User</DialogTitle>
@@ -78,7 +77,7 @@ function AddNewUser() {
           <DialogFooter>
             <Button
               className="disabled:opacity-55"
-              disabled = {!handleSaveButtonVaild}
+              disabled = {!handleSaveButtonValid}
               type="submit">
               Save changes
             </Button>

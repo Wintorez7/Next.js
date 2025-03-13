@@ -33,6 +33,31 @@ export async function addNewUserAction(formData) {
 }
 
 //fetch users actions
+export async function fetchUserActions() {
+
+    await connectToDB();
+
+    try {
+        const ListOfUserData = await User.find({});
+        if(ListOfUserData){
+            return({
+                success:true,
+                data:JSON.parse(JSON.stringify(ListOfUserData))
+            })
+        }else{
+            return({
+                success: false,
+                message:"Something went Wrong Data Not fetched"
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        return({
+            success: false,
+            message:"Something went Wrong"
+        })
+    }
+}
 
 
 //edit users actions
