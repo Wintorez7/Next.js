@@ -1,5 +1,5 @@
 "use client";
-import { addNewUserAction } from "@/actions";
+import { addNewUserAction, editUserAction } from "@/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,20 +16,35 @@ import { addNewUserFormControls, addNewUserFormInitialState } from "@/utils";
 import { useContext, useState } from "react";
 
 function AddNewUser() {
-  const {currentEditedID , setCurrentEditedID , openPopup , setOpenPopup , addNewUserFormData , setaddNewUserFormData} = useContext(UserContext);
+  const {
+    currentEditedID,
+    setCurrentEditedID,
+    openPopup,
+    setOpenPopup,
+    addNewUserFormData,
+    setaddNewUserFormData,
+  } = useContext(UserContext);
   console.log(addNewUserFormData);
 
   function handleSaveButtonValid() {
     return Object.keys(addNewUserFormData).every(
-      key => addNewUserFormData[key].trim() !== ""
+      (key) => addNewUserFormData[key].trim() !== ""
     );
   }
 
   async function handleAddNewUserAction() {
-      const result = await addNewUserAction(addNewUserFormData,'/user-management')
-      console.log(result);
-      setOpenPopup(false);
-      setaddNewUserFormData(addNewUserFormInitialState);
+    const result =
+      currentEditedID !== null
+        ? await editUserAction(
+            currentEditedID,
+            addNewUserFormData,
+            "/user-management"
+          )
+        : await addNewUserAction(addNewUserFormData, "/user-management");
+    console.log(result);
+    setOpenPopup(false);
+    setaddNewUserFormData(addNewUserFormInitialState);
+    
   }
 
   return (
@@ -40,10 +55,13 @@ function AddNewUser() {
         onOpenChange={() => {
           setOpenPopup(false);
           setaddNewUserFormData(addNewUserFormInitialState);
-        }}>
+        }}
+      >
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add New User</DialogTitle>
+            <DialogTitle>
+              {currentEditedID !== null ? "Edit User" : "Add New User"}
+            </DialogTitle>
             <DialogDescription>
               Make changes to your profile here. Click save when you're done.
             </DialogDescription>
@@ -71,14 +89,15 @@ function AddNewUser() {
                   />
                 </div>
               ))}
-          <DialogFooter>
-            <Button
-              className="disabled:opacity-55"
-              disabled = {!handleSaveButtonValid}
-              type="submit">
-              Save changes
-            </Button>
-          </DialogFooter>
+              <DialogFooter>
+                <Button
+                  className="disabled:opacity-55"
+                  disabled={!handleSaveButtonValid}
+                  type="submit"
+                >
+                  Save changes
+                </Button>
+              </DialogFooter>
             </div>
           </form>
         </DialogContent>

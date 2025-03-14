@@ -10,14 +10,29 @@ import {
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import { deleteUserAction } from "@/actions";
+import { UserContext } from "@/context";
+import { useContext } from "react";
+
 
 
 function SingleUserCard({user}) {
+  const {currentEditedID , setCurrentEditedID , openPopup , setOpenPopup , addNewUserFormData , setaddNewUserFormData} = useContext(UserContext);
 
   async function handleDelete(getCurrentUserID) {
       const result = await deleteUserAction(getCurrentUserID,"/user-management")
       console.log(result);
   }
+
+  async function handleEdit(getCurrentUser) {
+    setOpenPopup(true);
+    setaddNewUserFormData({
+      firstName:getCurrentUser?.firstName,
+      lastName:getCurrentUser?.lastName,
+      email:getCurrentUser?.email,
+      address:getCurrentUser?.address
+    })
+    setCurrentEditedID(getCurrentUser?._id)
+  }  
 
   return (
     <Card>
@@ -29,7 +44,7 @@ function SingleUserCard({user}) {
         <p>{user?.address}</p>
       </CardContent>
       <CardFooter className="gap-5">
-        <Button >Edit</Button>
+        <Button onClick={() => handleEdit(user)}>Edit</Button>
         <Button onClick={() => handleDelete(user?._id)}>Delete</Button>
       </CardFooter>
     </Card>

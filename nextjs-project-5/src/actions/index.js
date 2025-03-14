@@ -63,7 +63,38 @@ export async function fetchUserActions() {
 
 
 //edit users actions
+export async function editUserAction(currentUserID,formData,pathToRevalidate) {
+    await connectToDB();
 
+    try {
+        
+        const {firstName,lastName,email, address} = formData
+
+        const updatedUser = await User.findOneAndUpdate({
+            _id : currentUserID,
+        },{firstName,lastName,email,address})
+        
+     if(updatedUser){
+        revalidatePath(pathToRevalidate)
+        return{
+            success:true,
+            message:"user Updated Succesfully"
+        }
+     }else{
+        return{
+            success:false,
+            message:"Not able to Update user! Please try again"
+        }
+     }
+
+    } catch (error) {
+        console.log(error)
+        return{
+            success:false,
+            message:"Some Error Occured! Please try again"
+        }
+    }
+}
 
 
 //delete users actions
