@@ -12,7 +12,7 @@ async function UserManagement() {
         <h1>User Management</h1>
         <AddNewUser />
       </div>
-      <div className="mt-6">
+      <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         {ListOfUser?.data?.length > 0 ? (
           ListOfUser.data.map((userItem,index) => (
             <SingleUserCard key={userItem.id || index} user={userItem} />

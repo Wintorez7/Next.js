@@ -1,11 +1,39 @@
-'use client'
+"use client";
 
-function SingleUserCard(){
-    return(
-        <div>
-            Single User
-        </div>
-    )
-}   
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "../ui/button";
+import { deleteUserAction } from "@/actions";
 
-export default SingleUserCard
+
+function SingleUserCard({user}) {
+
+  async function handleDelete(getCurrentUserID) {
+      const result = await deleteUserAction(getCurrentUserID,"/user-management")
+      console.log(result);
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{user?.firstName} {user?.lastName}</CardTitle>
+        <CardDescription>{user?.email}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>{user?.address}</p>
+      </CardContent>
+      <CardFooter className="gap-5">
+        <Button >Edit</Button>
+        <Button onClick={() => handleDelete(user?._id)}>Delete</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
+export default SingleUserCard;

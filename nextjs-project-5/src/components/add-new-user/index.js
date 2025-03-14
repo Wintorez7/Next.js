@@ -11,15 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { UserContext } from "@/context";
 import { addNewUserFormControls, addNewUserFormInitialState } from "@/utils";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 function AddNewUser() {
-  const [openPopup, setOpenPopup] = useState(false);
-  const [addNewUserFormData, setaddNewUserFormData] = useState(
-    addNewUserFormInitialState
-  );
-
+  const {currentEditedID , setCurrentEditedID , openPopup , setOpenPopup , addNewUserFormData , setaddNewUserFormData} = useContext(UserContext);
   console.log(addNewUserFormData);
 
   function handleSaveButtonValid() {
@@ -29,7 +26,7 @@ function AddNewUser() {
   }
 
   async function handleAddNewUserAction() {
-      const result = await addNewUserAction(addNewUserFormData)
+      const result = await addNewUserAction(addNewUserFormData,'/user-management')
       console.log(result);
       setOpenPopup(false);
       setaddNewUserFormData(addNewUserFormInitialState);
