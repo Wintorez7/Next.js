@@ -1,18 +1,18 @@
 
 
-function CommonFormElement() {
+function CommonFormElement({currentItem,value,onChange}) {
     
     let content = null;
 
-    switch(currentItem.componentType,value,onChange){
+    switch(currentItem.componentType){
         case 'input':
             content = (
                 <input
                 name={currentItem.name}
                 id={currentItem.name}
                 placeholder={currentItem.placeholder}
-                value={value}
-                onChange={onchange}
+                value={value || ""}
+                onChange={onChange}
                 />  
             );
             
@@ -25,12 +25,12 @@ function CommonFormElement() {
                 id={currentItem.name}
                 placeholder={currentItem.placeholder}
                 value={value}
-                onChange={onchange}
+                onChange={onChange}
                 />  
             );    
     }
 
-    return 
+    return content
 }
 
 export default CommonFormElement;
