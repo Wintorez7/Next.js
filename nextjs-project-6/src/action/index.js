@@ -9,9 +9,14 @@ import { cookies } from "next/headers";
 export async function registerUserAction(formdata) {
     await connectToDB(); 
     try {
-        const{username, email, password} = formdata;
+        const{userName, email, password} = formdata;
         const checker = await User.findOne({email})
-        
+
+         // ✅ Check if all fields are provided
+        if (!userName || !email || !password) {
+            return { success: false, message: "All fields are required." };
+        }
+
         if(checker){
             return{
                 success:false,
@@ -23,7 +28,7 @@ export async function registerUserAction(formdata) {
         const hashedPassword = await bcrypt.hash(password,salt);
 
         const newlyCreatedUser = new User({
-            username,
+            username: userName,
             email,
             password:hashedPassword,
         });
@@ -48,13 +53,16 @@ export async function registerUserAction(formdata) {
             message:"Something went Wrong"
         }
     }
-}
+}   
 
 export async function loginUserAction(formdata) {
     await connectToDB();
 
     try {
         const {email , password} = formdata;
+
+        
+
         // check user is exist or not
         const checkUser = await User.findOne({email})
         if(!checkUser){
@@ -102,8 +110,8 @@ export async function loginUserAction(formdata) {
 export async function fetchAuthUserAction() {
     await connectToDB();
     try {
-        const getCookies = cookies();
-        const token = await getCookies.get("token")?.value || "";
+        const getCookies = await cookies();
+        const token =  getCookies.get("token")?.value || "";
         if(token == ''){
             return{
                 success:false,
@@ -134,3 +142,7 @@ export async function fetchAuthUserAction() {
     }
 }
 
+export async function logoutAction() {
+    const getCookies = cookies();
+    getCookies.set('token',"")
+}

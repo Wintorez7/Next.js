@@ -1,8 +1,7 @@
-import { User as LucideUser } from "lucide-react"; // Rename the imported User to avoid conflict
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    userName: String,
+    username: String,
     email: String,
     password: String,
 });
