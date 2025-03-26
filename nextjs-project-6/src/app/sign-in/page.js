@@ -40,7 +40,7 @@ function SignIn() {
                     [event.target.name]: event.target.value,
                   })
                 }
-              />
+              />  
             </div>
           ))}
           <Button type="submit" className="w-full py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md transition">

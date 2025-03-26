@@ -5,9 +5,9 @@ import store from "@/store"
 import { Provider } from "react-redux"
 
 
-export default function ReduxProvider({children}){
+export default function ReduxProvider({children,getSession}){
     return <Provider store={store}>
-            <Header/>
+            <Header getSession={getSession}/>
             {children}
            </Provider>
 }

@@ -1,9 +1,13 @@
 import { fetchProductDetails } from "@/actions";
+import { auth } from "@/auth";
 import AddToCart from "@/components/add-to-cart";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/dist/server/api-utils";
 
   async function ProductDetails({params}) {
     
+     const getSession = await auth();
+        if(!getSession) redirect("/unauth-page");
     
     const getProductDetails = await fetchProductDetails(params.details);
     console.log(getProductDetails)

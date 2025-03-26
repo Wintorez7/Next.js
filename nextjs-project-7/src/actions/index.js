@@ -1,5 +1,7 @@
 "use server"
 
+import { signIn, signOut } from "@/auth";
+
 // get all products
 
 export async function fetchAllProducts() {
@@ -39,4 +41,12 @@ export async function fetchProductDetails(currentProductID) {
             success:false
         }
     }
+}
+
+export async function loginAction() {
+    await signIn("github")
+}
+
+export async function logoutAction() {
+    await signOut();
 }

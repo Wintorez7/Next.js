@@ -1,8 +1,12 @@
+import { auth } from "@/auth";
+
 const { default: ReduxProvider } = require("@/provider");
 
 
 async function CommonLayout({children}) {
 
-    return <ReduxProvider>{children}</ReduxProvider>
+    const getSession = await auth()
+
+    return <ReduxProvider getSession={getSession}>{children}</ReduxProvider>
 }
 export default CommonLayout;
