@@ -1,6 +1,12 @@
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 
-function UnauthPage(){
+async function UnauthPage(){
+
+    const getSession = await auth();
+    if(getSession?.user) redirect('/')
+
     return(
         <div className="p-10">
             <h2 className="text-5xl font-extrabold">

@@ -25,7 +25,6 @@ function AddToCart({productItem}) {
           ? "Remove from Cart"
           : "Add To Cart"}
       </Button>
-      {/* onClick={isInCart ? handleRemoveFromCart : handleAddToCart} */}
     </div>
   );
 }
